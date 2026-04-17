@@ -43,6 +43,21 @@ python 02_mnist.py
 ```
 This generates `compiled_mnist_pipeline.yaml` which can be uploaded to your Kubeflow cluster.
 
+### 3. Volume Pipeline (`03_volumes.py`)
+
+A pipeline that demonstrates how to persist data to a Kubernetes Persistent Volume Claim (PVC). This example shows:
+- Mounting a PVC to a task container using `kubernetes.mount_pvc()`.
+- Writing files to the mounted volume path within the component.
+- Configuring CPU and memory resource requests and limits.
+
+The pipeline takes a test string as input, writes it to a timestamped file on the mounted volume, and saves it to `/mnt/data`.
+
+**Usage:**
+```bash
+python 03_volumes.py
+```
+This generates `compiled_volume_pipeline.yaml` which can be uploaded to your Kubeflow cluster. The pipeline assumes a PVC named `tutorial` exists in your Kubernetes cluster.
+
 ## How to use Kubeflow UI
 1. Open the Kubeflow Pipelines dashboard in your browser.
 2. Navigate to the **Pipelines** section.
