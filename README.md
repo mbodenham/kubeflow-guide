@@ -58,6 +58,44 @@ python 03_volumes.py
 ```
 This generates `compiled_volume_pipeline.yaml` which can be uploaded to your Kubeflow cluster. The pipeline assumes a PVC named `tutorial` exists in your Kubernetes cluster.
 
+### 4. Container Image Pipeline (`container/pipeline.py`)
+
+A pipeline that uses a custom container image (`mbodenham/kubeflow-tut`) to run inference with the Qwen3.5-0.8B language model. This example demonstrates:
+- Using a pre-built custom Docker image as the base image for a component.
+- Running a Python script inside the container with command-line arguments.
+- Mounting a PVC to save generated outputs to persistent storage.
+- Configuring GPU resources for inference workloads.
+
+The pipeline takes a text prompt as input, runs it through the Qwen3.5-0.8B model, and saves the generated response to a timestamped file on the mounted volume (`/mnt/data`).
+
+**Files:**
+- `container/main.py` - The Python script that loads the model and generates text
+- `container/Dockerfile` - Builds the custom image with transformers and main.py
+- `container/pipeline.py` - The Kubeflow pipeline definition
+
+**Build and push the container image:**
+
+First, log in to Docker Hub (or your preferred container registry):
+```bash
+docker login
+```
+
+Then build and push the image (replace `{user}` with your Docker Hub username):
+```bash
+docker build -t {user}/kubeflow-tut container/ && docker push {user}/kubeflow-tut
+```
+
+**Compile the pipeline:**
+```bash
+python container/pipeline.py
+```
+
+This generates `compiled_qwen_pipeline.yaml` which can be uploaded to your Kubeflow cluster. The pipeline assumes:
+- A PVC named `tutorial` exists in your Kubernetes cluster
+- The container image `{user}/kubeflow-tut` is pushed to a registry accessible by your cluster (update `base_image` in `container/pipeline.py` if using a different registry)
+- Your cluster has GPU nodes with the `nvidia.com/gpu` label
+
+
 ## How to use Kubeflow UI
 1. Open the Kubeflow Pipelines dashboard in your browser.
 2. Navigate to the **Pipelines** section.
