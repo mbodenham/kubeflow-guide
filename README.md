@@ -87,7 +87,7 @@ python 03_volumes.py
 **Pipeline flow:** Prompt → Qwen model → generated text → `/mnt/data` 📝
 
 **📁 Files:**
-- `container/main.py` — Model inference script
+- `container/main.py` — Model inference script (with docstrings and CLI help)
 - `container/Dockerfile` — Custom image with transformers
 - `container/pipeline.py` — KFP pipeline definition
 
@@ -119,6 +119,24 @@ python container/pipeline.py
 2. **Upload** your `.yaml` file 📤
 3. **Create** an Experiment 🧪
 4. **Run** your pipeline! 🏃‍♂️
+
+---
+
+## 📝 Code Organization & Comments
+
+All pipeline files follow a consistent structure with clear section markers:
+
+| Section | Marker | Purpose |
+|---------|--------|---------|
+| **Imports** | `# ====` | File imports at the top |
+| **Components** | `# 🧱` or `# 🤖` | Component definitions |
+| **Pipeline** | `# 📐` | Pipeline definition with flow |
+| **Compilation** | `# ⚙️` | Main compilation logic |
+
+Each component includes:
+- 📖 Clear docstrings with Args/Returns
+- 💡 Inline comments for complex logic
+- 🔍 Type hints for better IDE support
 
 ---
 
